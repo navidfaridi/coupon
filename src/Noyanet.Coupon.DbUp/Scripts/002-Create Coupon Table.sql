@@ -1,0 +1,35 @@
+﻿SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CouponInfo](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[Code] [varchar](10) NOT NULL,
+	[CouponType] [tinyint] NOT NULL,
+	[CouponValue] [int] NOT NULL,
+	[Created] [datetime2] NOT NULL,
+	[MaxUsage] [smallint] NOT NULL,
+	[UsageCount] [smallint] NULL,
+	[ExpireDate] [datetime2] NULL,
+	[UniqueId] [uniqueidentifier] NOT NULL,
+	[RowVersion] [timestamp] NOT NULL,
+ CONSTRAINT [PK_CouponInfo] PRIMARY KEY CLUSTERED 
+(
+	[Code] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_CouponInfo_id]    Script Date: 12/2/2023 12:30:26 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [IX_CouponInfo_id] ON [dbo].[CouponInfo]
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_CouponInfo_uniqueId]    Script Date: 12/2/2023 12:30:26 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [IX_CouponInfo_uniqueId] ON [dbo].[CouponInfo]
+(
+	[UniqueId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[CouponInfo] ADD  CONSTRAINT [DF_CouponInfo_UniqueId]  DEFAULT (newid()) FOR [UniqueId]
+GO
